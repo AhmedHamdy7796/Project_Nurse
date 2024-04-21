@@ -85,7 +85,7 @@ class User(AbstractUser):
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='patient')
-    date_of_birth = models.DateField(default="yy/mm/dd")
+    date_of_birth = models.DateField(default="yyyy/mm/dd")
 
 
 
