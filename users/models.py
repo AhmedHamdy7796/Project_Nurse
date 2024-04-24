@@ -60,7 +60,7 @@ class User(AbstractUser):
     national_id = models.CharField(max_length=14, blank=True)
     national_id_image = models.URLField(default='image')
     selfie = models.URLField(default='image')
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='patient')
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='patient',blank=False)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='Male')
 
     notification_token = models.CharField(max_length=255, null=True)
@@ -71,22 +71,22 @@ class User(AbstractUser):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
-
-
     USERNAME_FIELD = "email"
 
     REQUIRED_FIELDS = []
 
     objects = MyUserManager()
 
-    def __str__(self):
+    def _str_(self):
         return self.email
 
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='patient')
-    date_of_birth = models.DateField(default="yyyy/mm/dd")
+    date_of_birth = models.CharField(max_length=100)
 
+    def _str_(self):
+        return self.user.email
 
 
     
@@ -95,23 +95,9 @@ class Nurse(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='nurse')
     certificate_image = models.URLField(default='image')
     department = models.CharField(max_length=100)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    def _str_(self):
+        return self.user.email
 
 
 
@@ -120,5 +106,5 @@ class OTP(models.Model):
     otp = models.CharField(max_length=6)
     created_at = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
+    def _str_(self):
         return f"OTP for {self.email}"

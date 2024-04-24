@@ -20,8 +20,8 @@ class UserRegisterSerializer(UserDetailsSerializer):
             }
         }
 
-        def save(self, request):
-            user = User(
+    def save(self, request):
+        user = User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
             first_name=self.validated_data['first_name'],
@@ -31,7 +31,6 @@ class UserRegisterSerializer(UserDetailsSerializer):
             role=self.validated_data['role'],
             national_id_image=self.validated_data['national_id_image'],
             selfie=self.validated_data['selfie'],
-            
         )
 
         optional_fields = ['notification_token']
@@ -48,6 +47,13 @@ class UserRegisterSerializer(UserDetailsSerializer):
                 {'password': 'Passwords must match.'})
         user.set_password(password)
         user.save()
+        
+        if user.role == 'patient':
+            Patient.objects.create(user=user,date_of_birth=request.data['date_of_birth'])
+        elif user.role == 'nurse':
+            Nurse.objects.create(user=user)
+            
+            
         return user
 
 
@@ -65,14 +71,14 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
 class NurseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nurse
-        fields = '__all__'
+        fields = '_all_'
 
 
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = '__all__'
+        fields = '_all_'
 
 
 
