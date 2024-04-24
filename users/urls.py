@@ -35,8 +35,8 @@ urlpatterns = [
     path('generate-otp/', generate_otp, name='generate_otp'),
     path('verify-otp/', verify_otp, name='verify_otp'),
     # path('set_password/', set_password, name='set_password'),
-    path('api/reset-password/', reset_password, name='reset_password_with_otp'),
-    path('api/update-password/', make_password, name='update_password_after_otp_verification'),
+    #path('api/reset-password/', reset_password, name='reset_password_with_otp'),
+    #path('api/update-password/', make_password, name='update_password_after_otp_verification'),
 
 ]
 

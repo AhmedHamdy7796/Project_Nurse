@@ -3,6 +3,7 @@ from .models import User
 from django.utils import timezone
 from django.db import models
 from dj_rest_auth.serializers import UserDetailsSerializer
+from .models import Nurse, Patient
 
 
 class UserRegisterSerializer(UserDetailsSerializer):
@@ -52,6 +53,22 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         exclude = ['is_superuser', 'is_staff', 'last_login', 'date_joined',
                    'is_active', 'password', 'groups', 'user_permissions']
         read_only_fields = ('id', )
+
+
+# new serializers for patient and nurse
+
+class NurseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Nurse
+        fields = '__all__'
+
+
+
+class PatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        fields = '__all__'
+
 
 
 
