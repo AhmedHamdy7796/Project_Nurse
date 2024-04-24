@@ -20,13 +20,18 @@ class UserRegisterSerializer(UserDetailsSerializer):
             }
         }
 
-    def save(self, request):
-        user = User(
+        def save(self, request):
+            user = User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name'],
             national_id=self.validated_data['national_id'],
+            gender=self.validated_data['gender'],
+            role=self.validated_data['role'],
+            national_id_image=self.validated_data['national_id_image'],
+            selfie=self.validated_data['selfie'],
+            
         )
 
         optional_fields = ['notification_token']
