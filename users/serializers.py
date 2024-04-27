@@ -66,8 +66,8 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         read_only_fields = ('id', )
 
 
-# new serializers for patient and nurse
 
+# new serializers for patient and nurse
 class NurseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nurse

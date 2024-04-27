@@ -3,6 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Booking
 from .serializers import BookingSerializer
+from rest_framework import generics
+from rest_framework.response import Response
+from .models import Patient
+from .serializers import NurseSerializer
+from users.models import Nurse
+
 
 
 
@@ -19,3 +25,25 @@ def list_bookings(request):
     bookings = Booking.objects.all()
     serializer = BookingSerializer(bookings, many=True)
     return Response(serializer.data)
+
+
+
+# search
+class NurseSearchAPIView(generics.ListAPIView):
+    serializer_class = NurseSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('query', None)
+        if query:
+            return Nurse.objects.filter(full_name__icontains=query)
+        return Nurse.objects.all()  # Return all nurses if no query is provided
+
+
+
+# list of nurse
+class NurseListAPIView(generics.ListAPIView):
+    queryset = Nurse.objects.all()
+    serializer_class = NurseSerializer
+
+
+
